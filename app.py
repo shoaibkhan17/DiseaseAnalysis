@@ -2,6 +2,9 @@ from flask.app import Flask
 from flask import request
 from flask_cors import CORS, cross_origin
 from flask import jsonify
+from prediction import Prediction
+
+predictionCVD = Prediction('heart.csv')
 
 app = Flask(__name__, static_folder='./client/build', static_url_path='/')
 cors = CORS(app)
@@ -45,6 +48,12 @@ def predictHeartDisease():
     lst.append(maxHeartRate)
     lst.append(exerciseAngina)
 
-    print(lst)
+    heartDisease = predictionCVD.predict([lst])
+    probabilty = predictionCVD.probability([lst])
+    score = predictionCVD.score()
+
+    print(heartDisease)
+    print(probabilty)
+    print(score)
 
     return jsonify({"success": "true"})
