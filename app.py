@@ -24,4 +24,27 @@ def index():
 @cross_origin()
 def predictHeartDisease():
     response = request.get_json()
+    age = int(response['age'])
+    sex = int(response['sex'])
+    chestPainType = int(response['chestPainType'])
+    bloodPressure = int(response['bloodPressure'])
+    serumCholesterol = int(response['serumCholesterol'])
+    bloodSugar = int(response['bloodSugar'])
+    vesselsColored = int(response['vesselsColored'])
+    maxHeartRate = int(response['maxHeartRate'])
+    exerciseAngina = int(response['exerciseAngina'])
+
+    lst = []
+    lst.append(age)
+    lst.append(sex)
+    lst.append(chestPainType)
+    lst.append(bloodPressure)
+    lst.append(serumCholesterol)
+    lst.append(bloodSugar)
+    lst.append(vesselsColored)
+    lst.append(maxHeartRate)
+    lst.append(exerciseAngina)
+
+    print(lst)
+
     return jsonify({"success": "true"})
