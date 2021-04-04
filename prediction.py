@@ -5,7 +5,7 @@ from sklearn.linear_model import LogisticRegression
 
 class Prediction:
     def __init__(self, filename):
-        self.data = pd.read_csv('../Datasets/' + filename)
+        self.data = pd.read_csv('Datasets/' + filename)
         self.df = pd.DataFrame(self.data)
         self.x = self.df.drop("target", axis=1)
         self.y = self.df.target
@@ -24,11 +24,11 @@ class Prediction:
         return score
 
 
-prediction = Prediction('heart.csv')
-heartDisease = prediction.predict([[57, 1, 0, 130, 131, 0, 1, 115, 1]])
-probabilty = prediction.probability([[57, 1, 0, 130, 131, 0, 1, 115, 1]])
-score = prediction.score()
+# prediction = Prediction('heart.csv')
+# heartDisease = prediction.predict([[57, 1, 0, 130, 131, 0, 1, 115, 1]])
+# probabilty = prediction.probability([[57, 1, 0, 130, 131, 0, 1, 115, 1]])
+# score = prediction.score()
 
-print(heartDisease)
-print(probabilty)
-print(score)
+# print(heartDisease)
+# print(probabilty)
+# print(score)
