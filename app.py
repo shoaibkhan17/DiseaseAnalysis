@@ -51,20 +51,17 @@ def predictHeartDisease():
     predictionDict = getPrediction(lst)
     return json.dumps(predictionDict)
 
+
 def getPrediction(lst):
     heartDisease = predictionCVD.predict([lst])
-    probabilty = predictionCVD.probability([lst])
+    probability = predictionCVD.probability([lst])
     score = predictionCVD.score()
 
     predictionDict = {
-        "heartDisease" : int(heartDisease[0]),
-        "probability" : float(probabilty[0][1]),
-        "accuracy" : float(score)
+        "prediction": int(heartDisease),
+        "nonHeartDiseaseProb": float(probability[0][0]),
+        "heartDiseaseProb": float(probability[0][1]),
+        "accuracy": float(score)
     }
 
-    # predictionDict = {
-    #     "heartDisease" : 0,
-    #     "probability" : 0.873401260897168,
-    #     "accuracy" : 0.8133333333333334
-    # }
     return predictionDict
