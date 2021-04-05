@@ -4,7 +4,9 @@ from flask_cors import CORS, cross_origin
 from flask import jsonify, json
 from prediction import Prediction
 
-predictionCVD = Prediction('heart.csv')
+heart = Prediction("heart", "target")
+stroke = Prediction("stroke", "stroke")
+liver = Prediction("liver", "Liver_Disease")
 
 app = Flask(__name__, static_folder='./frontend/build', static_url_path='/')
 cors = CORS(app)
@@ -27,6 +29,24 @@ def index():
 @cross_origin()
 def predictHeartDisease():
     response = request.get_json()
+    disease = response['disease']
+
+    if (disease == "heart"):
+        predictionDict = getHeartPrediction(response)
+
+    elif (disease == "stroke"):
+        predictionDict = getStrokePrediction(response)
+
+    elif (disease == "liver"):
+        predictionDict = getLiverPrediction(response)
+
+    else:
+        return 'No Disease Option Specified'
+
+    return json.dumps(predictionDict)
+
+
+def getHeartPrediction(response):
     age = int(response['age'])
     sex = int(response['sex'])
     chestPainType = int(response['chestPainType'])
@@ -48,20 +68,47 @@ def predictHeartDisease():
     lst.append(maxHeartRate)
     lst.append(exerciseAngina)
 
-    predictionDict = getPrediction(lst)
-    return json.dumps(predictionDict)
-
-
-def getPrediction(lst):
-    heartDisease = predictionCVD.predict([lst])
-    probability = predictionCVD.probability([lst])
-    score = predictionCVD.score()
+    heartDisease = heart.predict([lst])
+    probability = heart.probability([lst])
+    score = heart.score()
 
     predictionDict = {
-        "prediction": int(heartDisease),
-        "nonHeartDiseaseProb": float(probability[0][0]),
-        "heartDiseaseProb": float(probability[0][1]),
-        "accuracy": float(score)
+        "prediction": round(int(heartDisease) * 100, 2),
+        "nonDiseaseProb": round(float(probability[0][0]) * 100, 2),
+        "diseaseProb": round(float(probability[0][1]) * 100, 2),
+        "accuracy": round(float(score) * 100, 2)
+    }
+
+    return predictionDict
+
+
+def getStrokePrediction(response):
+    lst = []
+    strokeDisease = stroke.predict([lst])
+    probability = stroke.probability([lst])
+    score = stroke.score()
+
+    predictionDict = {
+        "prediction": round(int(strokeDisease) * 100, 2),
+        "nonDiseaseProb": round(float(probability[0][0]) * 100, 2),
+        "diseaseProb": round(float(probability[0][1]) * 100, 2),
+        "accuracy": round(float(score) * 100, 2)
+    }
+
+    return predictionDict
+
+
+def getLiverPrediction(response):
+    lst = []
+    liverDisease = liver.predict([lst])
+    probability = liver.probability([lst])
+    score = liver.score()
+
+    predictionDict = {
+        "prediction": round(int(liverDisease) * 100, 2),
+        "nonDiseaseProb": round(float(probability[0][0]) * 100, 2),
+        "diseaseProb": round(float(probability[0][1]) * 100, 2),
+        "accuracy": round(float(score) * 100, 2)
     }
 
     return predictionDict

@@ -2,7 +2,6 @@ import React from "react";
 import {
   TextField,
   Button,
-  LinearProgress,
   Typography,
   FormControl,
   Select,
@@ -12,6 +11,7 @@ import axios from "axios";
 import "../styles/styles.css";
 import { MenuItem } from "@material-ui/core";
 import { InputLabel } from "@material-ui/core";
+import Graph from "./Graph";
 
 const HEART_DISEASE_PREDICTION_URL =
   "http://localhost:5000/predictHeartDisease";
@@ -29,18 +29,23 @@ class HeartDisease extends React.Component {
       exerciseAngina: 0,
       bloodSugar: 1,
       vesselsColored: 0,
+      accuracy: 0,
+      results: [],
     };
     this.handleClick = this.handleClick.bind(this);
     this.firstColumn = this.firstColumn.bind(this);
     this.secondColumn = this.secondColumn.bind(this);
     this.thirdColumn = this.thirdColumn.bind(this);
     this.fourthColumn = this.fourthColumn.bind(this);
+    this.heartDiseaseForm = this.heartDiseaseForm.bind(this);
+    this.extractResponse = this.extractResponse.bind(this);
   }
 
   componentDidMount() {}
 
   async handleClick() {
     var obj = {
+      disease: "heart",
       age: this.state.age,
       sex: this.state.sex,
       chestPainType: this.state.chestPainType,
@@ -54,8 +59,70 @@ class HeartDisease extends React.Component {
 
     axios
       .post(HEART_DISEASE_PREDICTION_URL, obj)
-      .then((res) => console.log("sent response"))
+      .then((res) => this.extractResponse(res.data))
       .catch((error) => console.log(error));
+  }
+
+  extractResponse(data) {
+    var results = [
+      {
+        name: "Heart Disease",
+        probability: data.diseaseProb,
+      },
+      {
+        name: "No Heart Disease",
+        probability: data.nonDiseaseProb,
+      },
+    ];
+
+    this.setState({ results: results });
+    this.setState({ accuracy: data.accuracy });
+  }
+
+  heartDiseaseForm() {
+    return (
+      <div className="box">
+        <Grid
+          container
+          direction="column"
+          justify="space-between"
+          alignItems="stretch"
+          spacing={5}
+        >
+          <Grid item>
+            <Typography
+              variant="h6"
+              style={{
+                paddingBottom: "15px",
+                color: "rgb(50, 152, 220)",
+                textDecoration: "underline",
+              }}
+            >
+              Enter Cardiovascular Parameters
+            </Typography>
+          </Grid>
+
+          <Grid item>{this.firstColumn()}</Grid>
+
+          <Grid item>{this.secondColumn()}</Grid>
+
+          <Grid item>{this.thirdColumn()}</Grid>
+
+          <Grid item>{this.fourthColumn()}</Grid>
+
+          <Grid item>
+            <Button
+              variant="contained"
+              fullWidth
+              color={"primary"}
+              onClick={this.handleClick}
+            >
+              Predict
+            </Button>
+          </Grid>
+        </Grid>
+      </div>
+    );
   }
 
   firstColumn() {
@@ -220,47 +287,20 @@ class HeartDisease extends React.Component {
 
   render() {
     return (
-      <div className="box">
+      <div style={{ width: "95vw" }}>
         <Grid
           container
-          direction="column"
-          justify="space-between"
-          alignItems="stretch"
+          justify="center"
+          style={{ flexGrow: 1, marginTop: "10vh" }}
           spacing={5}
         >
+          <Grid item>{this.heartDiseaseForm()}</Grid>
           <Grid item>
-            <Typography
-              variant="h6"
-              style={{
-                paddingBottom: "15px",
-                color: "rgb(50, 152, 220)",
-                textDecoration: "underline",
-              }}
-            >
-              Enter Cardiovascular Parameters
-            </Typography>
-          </Grid>
-
-          <Grid item>{this.firstColumn()}</Grid>
-
-          <Grid item>{this.secondColumn()}</Grid>
-
-          <Grid item>{this.thirdColumn()}</Grid>
-
-          <Grid item>{this.fourthColumn()}</Grid>
-
-          <Grid item>
-            <Button
-              variant="contained"
-              fullWidth
-              color={"primary"}
-              onClick={this.handleClick}
-            >
-              Predict
-            </Button>
-            {/* {this.state.predicting && (
-              <LinearProgress color="primary" style={{ color: "#33eb91" }} />
-            )} */}
+            <Graph
+              data={this.state.results}
+              title="Heart Disease"
+              accuracy={this.state.accuracy}
+            />
           </Grid>
         </Grid>
       </div>

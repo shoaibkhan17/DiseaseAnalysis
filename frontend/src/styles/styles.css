@@ -1,11 +1,16 @@
 .box {
-  /* height: 60vh; */
-  width: 30vw;
+  min-width: 30vw;
+  /* min-height: 580px; */
   box-shadow: rgb(145 158 171 / 24%) 0px 0px 2px 0px,
     rgb(145 158 171 / 24%) 0px 16px 32px -4px;
   border-radius: 2%;
-  /* position: relative; */
   padding: 5%;
+}
+
+.graphBox {
+  height: 60vh;
+  width: 30vw;
+  min-width: 504px;
 }
 
 .title {
@@ -21,8 +26,6 @@
   padding-bottom: 10%;
   padding-left: 5%;
   padding-right: 5%;
-  /* padding: 10%; */
-  /* margin-top: auto; */
   margin-bottom: auto;
 }
 
