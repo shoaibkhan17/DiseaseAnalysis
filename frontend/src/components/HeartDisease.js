@@ -12,6 +12,7 @@ import "../styles/styles.css";
 import { MenuItem } from "@material-ui/core";
 import { InputLabel } from "@material-ui/core";
 import Graph from "./Graph";
+import { DEFAULT_COLOR } from "../constants";
 
 const HEART_DISEASE_PREDICTION_URL =
   "http://localhost:5000/predictHeartDisease";
@@ -64,6 +65,10 @@ class HeartDisease extends React.Component {
   }
 
   extractResponse(data) {
+    if (data === "No Disease Option Specified") {
+      return;
+    }
+
     var results = [
       {
         name: "Heart Disease",
@@ -94,7 +99,7 @@ class HeartDisease extends React.Component {
               variant="h6"
               style={{
                 paddingBottom: "15px",
-                color: "rgb(50, 152, 220)",
+                color: "#F51F1F",
                 textDecoration: "underline",
               }}
             >
@@ -114,7 +119,10 @@ class HeartDisease extends React.Component {
             <Button
               variant="contained"
               fullWidth
-              color={"primary"}
+              style={{
+                background: DEFAULT_COLOR,
+                color: "white",
+              }}
               onClick={this.handleClick}
             >
               Predict
