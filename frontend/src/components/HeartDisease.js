@@ -298,12 +298,16 @@ class HeartDisease extends React.Component {
       <div style={{ width: "95vw" }}>
         <Grid
           container
+          direction="row"
+          alignItems="center"
           justify="center"
           style={{ flexGrow: 1, marginTop: "10vh" }}
           spacing={5}
         >
-          <Grid item>{this.heartDiseaseForm()}</Grid>
-          <Grid item>
+          <Grid item style={{ minWidth: "30vw" }}>
+            {this.heartDiseaseForm()}
+          </Grid>
+          <Grid item style={{ minWidth: "30vw" }}>
             <Graph
               data={this.state.results}
               title="Heart Disease"

@@ -26,10 +26,12 @@ class Graph extends PureComponent {
   render() {
     return (
       <div className="graphBox">
-        {this.props.accuracy === 0
-          ? ""
-          : "Prediction Accuracy: " + this.props.accuracy + "%"}
-        <ResponsiveContainer width="100%" height="100%">
+        {this.props.accuracy === 0 ? (
+          <br />
+        ) : (
+          "Prediction Accuracy: " + this.props.accuracy + "%"
+        )}
+        <ResponsiveContainer width="90%" height="90%">
           <BarChart
             width={500}
             height={300}

@@ -8,11 +8,17 @@ import {
   Redirect,
 } from "react-router-dom";
 import HeartDisease from "./HeartDisease";
+import { BACKGROUND_COLOR } from "../constants";
 
 class Main extends React.Component {
   render() {
     return (
-      <div style={{ height: "100vh" }}>
+      <div
+        style={{
+          height: "100vh",
+          background: BACKGROUND_COLOR,
+        }}
+      >
         <Router>
           <TopBar />
           <Switch>
