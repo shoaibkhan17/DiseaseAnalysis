@@ -298,7 +298,7 @@ class HeartDisease extends React.Component {
           <Typography variant="h4">Heart Disease Prediction</Typography>
 
           <RedirectButton
-            label="Click here for heart disease prediction"
+            label="Click here for heart disease visualization"
             url="/heart-disease-visualization"
           />
         </div>
