@@ -25,7 +25,7 @@ def index():
     return app.send_static_file('index.html')
 
 
-@app.route("/predictHeartDisease", methods=['POST'])
+@app.route("/predictDisease", methods=['POST'])
 @cross_origin()
 def predictHeartDisease():
     response = request.get_json()
@@ -50,11 +50,11 @@ def getHeartPrediction(response):
     age = int(response['age'])
     sex = int(response['sex'])
     chestPainType = int(response['chestPainType'])
-    bloodPressure = int(response['bloodPressure'])
-    serumCholesterol = int(response['serumCholesterol'])
-    bloodSugar = int(response['bloodSugar'])
+    bloodPressure = float(response['bloodPressure'])
+    serumCholesterol = float(response['serumCholesterol'])
+    bloodSugar = float(response['bloodSugar'])
     vesselsColored = int(response['vesselsColored'])
-    maxHeartRate = int(response['maxHeartRate'])
+    maxHeartRate = float(response['maxHeartRate'])
     exerciseAngina = int(response['exerciseAngina'])
 
     lst = []
@@ -83,7 +83,21 @@ def getHeartPrediction(response):
 
 
 def getStrokePrediction(response):
+    age = int(response['age'])
+    gender = int(response['gender'])
+    hypertension = int(response['hypertension'])
+    heartDisease = int(response['heartDisease'])
+    avgGlucoseLevel = float(response['avgGlucoseLevel'])
+    bmi = float(response['bmi'])
+
     lst = []
+    lst.append(age)
+    lst.append(gender)
+    lst.append(hypertension)
+    lst.append(heartDisease)
+    lst.append(avgGlucoseLevel)
+    lst.append(bmi)
+
     strokeDisease = stroke.predict([lst])
     probability = stroke.probability([lst])
     score = stroke.score()

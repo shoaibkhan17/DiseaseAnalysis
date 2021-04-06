@@ -14,19 +14,16 @@ import { InputLabel } from "@material-ui/core";
 import Graph from "./Graph";
 import { DEFAULT_COLOR, PREDICTION_API_URL } from "../constants";
 
-class HeartDisease extends React.Component {
+class StrokeDisease extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      age: 63,
-      sex: 1,
-      bloodPressure: 145,
-      chestPainType: 3,
-      serumCholesterol: 233,
-      maxHeartRate: 150,
-      exerciseAngina: 0,
-      bloodSugar: 1,
-      vesselsColored: 0,
+      age: 67,
+      gender: 1,
+      bmi: 36.6,
+      hypertension: 0,
+      avgGlucoseLevel: 228.69,
+      heartDisease: 1,
       accuracy: 0,
       results: [],
     };
@@ -34,7 +31,6 @@ class HeartDisease extends React.Component {
     this.firstColumn = this.firstColumn.bind(this);
     this.secondColumn = this.secondColumn.bind(this);
     this.thirdColumn = this.thirdColumn.bind(this);
-    this.fourthColumn = this.fourthColumn.bind(this);
     this.heartDiseaseForm = this.heartDiseaseForm.bind(this);
     this.extractResponse = this.extractResponse.bind(this);
   }
@@ -43,16 +39,13 @@ class HeartDisease extends React.Component {
 
   async handleClick() {
     var obj = {
-      disease: "heart",
+      disease: "stroke",
       age: this.state.age,
-      sex: this.state.sex,
-      chestPainType: this.state.chestPainType,
-      bloodPressure: this.state.bloodPressure,
-      serumCholesterol: this.state.serumCholesterol,
-      bloodSugar: this.state.bloodSugar,
-      vesselsColored: this.state.vesselsColored,
-      maxHeartRate: this.state.maxHeartRate,
-      exerciseAngina: this.state.exerciseAngina,
+      gender: this.state.gender,
+      bmi: this.state.bmi,
+      hypertension: this.state.hypertension,
+      avgGlucoseLevel: this.state.avgGlucoseLevel,
+      heartDisease: this.state.heartDisease,
     };
 
     axios
@@ -68,11 +61,11 @@ class HeartDisease extends React.Component {
 
     var results = [
       {
-        name: "Heart Disease",
+        name: "Stroke Disease",
         probability: data.diseaseProb,
       },
       {
-        name: "No Heart Disease",
+        name: "No Stroke Disease",
         probability: data.nonDiseaseProb,
       },
     ];
@@ -100,7 +93,7 @@ class HeartDisease extends React.Component {
                 textDecoration: "underline",
               }}
             >
-              Enter Cardiovascular Parameters
+              Enter Stroke Disease Parameters
             </Typography>
           </Grid>
 
@@ -109,8 +102,6 @@ class HeartDisease extends React.Component {
           <Grid item>{this.secondColumn()}</Grid>
 
           <Grid item>{this.thirdColumn()}</Grid>
-
-          <Grid item>{this.fourthColumn()}</Grid>
 
           <Grid item>
             <Button
@@ -133,7 +124,7 @@ class HeartDisease extends React.Component {
   firstColumn() {
     return (
       <Grid container spacing={2}>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <TextField
             label="Age"
             placeholder="20"
@@ -145,32 +136,18 @@ class HeartDisease extends React.Component {
             style={{ paddingBottom: "4%" }}
           />
         </Grid>
-        <Grid item xs={4}>
+        <Grid item xs={6}>
           <FormControl variant="outlined" fullWidth>
-            <InputLabel>Sex</InputLabel>
+            <InputLabel>Gender</InputLabel>
             <Select
-              label="Sex"
-              value={this.state.sex}
-              onChange={(event) => this.setState({ sex: event.target.value })}
+              label="Gender"
+              value={this.state.gender}
+              onChange={(event) =>
+                this.setState({ gender: event.target.value })
+              }
             >
               <MenuItem value={0}>Female</MenuItem>
               <MenuItem value={1}>Male</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={4}>
-          <FormControl variant="outlined" fullWidth>
-            <InputLabel>Chest Pain Type</InputLabel>
-            <Select
-              label="Chest Pain Type"
-              value={this.state.chestPainType}
-              onChange={(event) =>
-                this.setState({ chestPainType: event.target.value })
-              }
-            >
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
             </Select>
           </FormControl>
         </Grid>
@@ -181,28 +158,29 @@ class HeartDisease extends React.Component {
   secondColumn() {
     return (
       <Grid container spacing={2}>
-        <Grid item xs={7}>
-          <TextField
-            label="Resting Blood Pressure (mm Hg)"
-            placeholder="145"
-            variant="outlined"
-            fullWidth
-            type="number"
-            value={this.state.bloodPressure}
-            onChange={(event) =>
-              this.setState({ bloodPressure: event.target.value })
-            }
-            style={{ paddingBottom: "4%" }}
-          />
-        </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={6}>
           <FormControl variant="outlined" fullWidth>
-            <InputLabel>Exercise Induced Angina</InputLabel>
+            <InputLabel>Hypertension</InputLabel>
             <Select
-              label=">Exercise Induced Angina"
-              value={this.state.exerciseAngina}
+              label="Hypertension"
+              value={this.state.hypertension}
               onChange={(event) =>
-                this.setState({ exerciseAngina: event.target.value })
+                this.setState({ hypertension: event.target.value })
+              }
+            >
+              <MenuItem value={0}>No</MenuItem>
+              <MenuItem value={1}>Yes</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item xs={6}>
+          <FormControl variant="outlined" fullWidth>
+            <InputLabel>Heart Disease</InputLabel>
+            <Select
+              label="Heart Disease"
+              value={this.state.heartDisease}
+              onChange={(event) =>
+                this.setState({ heartDisease: event.target.value })
               }
             >
               <MenuItem value={0}>No</MenuItem>
@@ -217,72 +195,29 @@ class HeartDisease extends React.Component {
   thirdColumn() {
     return (
       <Grid container spacing={2}>
-        <Grid item xs={7}>
-          <FormControl variant="outlined" fullWidth>
-            <InputLabel>
-              Fasting Blood Sugar {"&"} Glucose (120 mg/dl)
-            </InputLabel>
-            <Select
-              label={"Fasting Blood Sugar & Glucose (120 mg/dl)"}
-              value={this.state.bloodSugar}
-              onChange={(event) =>
-                this.setState({ bloodSugar: event.target.value })
-              }
-            >
-              <MenuItem value={0}>No</MenuItem>
-              <MenuItem value={1}>Yes</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={8}>
           <TextField
-            label="Serum Cholesterol (mg/dl)"
-            placeholder="233"
+            label="Average Glucose Level (mmol/L)"
+            placeholder="228.69"
             variant="outlined"
             fullWidth
             type="number"
-            value={this.state.serumCholesterol}
+            value={this.state.avgGlucoseLevel}
             onChange={(event) =>
-              this.setState({ serumCholesterol: event.target.value })
+              this.setState({ avgGlucoseLevel: event.target.value })
             }
             style={{ paddingBottom: "4%" }}
           />
         </Grid>
-      </Grid>
-    );
-  }
-
-  fourthColumn() {
-    return (
-      <Grid container spacing={2}>
-        <Grid item xs={6}>
-          <FormControl variant="outlined" fullWidth>
-            <InputLabel>Major Vessels Colored</InputLabel>
-            <Select
-              label={"Major Vessels Colored"}
-              value={this.state.vesselsColored}
-              onChange={(event) =>
-                this.setState({ vesselsColored: event.target.value })
-              }
-            >
-              <MenuItem value={0}>0</MenuItem>
-              <MenuItem value={1}>1</MenuItem>
-              <MenuItem value={2}>2</MenuItem>
-              <MenuItem value={3}>3</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={4}>
           <TextField
-            label="Maximum Heart Rate (BPM)"
-            placeholder="150"
+            label="BMI"
+            placeholder="36.6"
             variant="outlined"
             fullWidth
             type="number"
-            value={this.state.maxHeartRate}
-            onChange={(event) =>
-              this.setState({ maxHeartRate: event.target.value })
-            }
+            value={this.state.bmi}
+            onChange={(event) => this.setState({ bmi: event.target.value })}
             style={{ paddingBottom: "4%" }}
           />
         </Grid>
@@ -307,7 +242,7 @@ class HeartDisease extends React.Component {
           <Grid item style={{ minWidth: "30vw" }}>
             <Graph
               data={this.state.results}
-              title="Heart Disease"
+              title="Stroke Disease"
               accuracy={this.state.accuracy}
             />
           </Grid>
@@ -317,4 +252,4 @@ class HeartDisease extends React.Component {
   }
 }
 
-export default HeartDisease;
+export default StrokeDisease;

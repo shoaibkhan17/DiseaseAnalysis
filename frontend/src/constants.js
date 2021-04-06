@@ -5,3 +5,5 @@ export const DEFAULT_COLOR =
 
 export const BACKGROUND_COLOR =
   "radial-gradient(circle, rgb(212, 156, 156) 0%, rgb(110, 106, 106) 100%)";
+
+export const PREDICTION_API_URL = "http://localhost:5000/predictDisease";

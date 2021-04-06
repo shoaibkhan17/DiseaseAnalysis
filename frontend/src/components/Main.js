@@ -1,6 +1,5 @@
 import React from "react";
 import TopBar from "./TopBar";
-import Home from "./Home";
 import {
   BrowserRouter as Router,
   Switch,
@@ -9,6 +8,7 @@ import {
 } from "react-router-dom";
 import HeartDisease from "./HeartDisease";
 import { BACKGROUND_COLOR } from "../constants";
+import StrokeDisease from "./StrokeDisease";
 
 class Main extends React.Component {
   render() {
@@ -28,7 +28,7 @@ class Main extends React.Component {
             />
             <Route
               path="/stroke-disease-prediction"
-              component={() => <div>Stroke</div>}
+              component={() => <StrokeDisease />}
             />
             <Route
               path="/liver-disease-prediction"
