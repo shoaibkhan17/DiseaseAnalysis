@@ -285,12 +285,20 @@ class LiverDisease extends React.Component {
   render() {
     return (
       <div style={{ width: "95vw" }}>
+        <div style={{ marginTop: "3vh" }}>
+          <Typography variant="h4">Liver Disease Prediction</Typography>
+
+          {/* <RedirectButton
+            label="Click here for heart disease prediction"
+            url="/heart-disease-visualization"
+          /> */}
+        </div>
         <Grid
           container
           direction="row"
           alignItems="center"
           justify="center"
-          style={{ flexGrow: 1, marginTop: "10vh" }}
+          style={{ flexGrow: 1, marginTop: "5vh" }}
           spacing={5}
         >
           <Grid item style={{ minWidth: "30vw" }}>
