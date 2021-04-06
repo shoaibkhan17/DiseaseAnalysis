@@ -53,9 +53,10 @@ class Prediction:
 # liverColumn = "Liver_Disease"
 # liverDF.drop(columns=['Direct_Bilirubin'], inplace=True)
 # liverDF['Gender'] = liverDF.Gender.replace({'Male': 1, 'Female': 0})
+# liverDF['Dataset'] = liverDF.Dataset.replace({1: 1, 2: 0})
 # liverDF.rename(columns={'Dataset': 'Liver_Disease'}, inplace=True)
 # liverDF = liverDF.fillna(liverDF.mean())
-# liverDF.to_csv('cleanedDatasets/liver.csv', index=False, header=True)
+# liverDF.to_csv('cleanedDatasets/liverTemp.csv', index=False, header=True)
 # predictionLiver = Prediction(liverDF, liverColumn)
 # print(predictionLiver.score())
 

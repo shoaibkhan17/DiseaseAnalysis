@@ -91,8 +91,8 @@ def getStrokePrediction(response):
     bmi = float(response['bmi'])
 
     lst = []
-    lst.append(age)
     lst.append(gender)
+    lst.append(age)
     lst.append(hypertension)
     lst.append(heartDisease)
     lst.append(avgGlucoseLevel)
@@ -113,7 +113,27 @@ def getStrokePrediction(response):
 
 
 def getLiverPrediction(response):
+    age = int(response['age'])
+    gender = int(response['gender'])
+    totalProteins = float(response['totalProteins'])
+    totalBilirubin = float(response['totalBilirubin'])
+    alkalinePhosphatase = int(response['alkalinePhosphatase'])
+    alamineAminotransferase = int(response['alamineAminotransferase'])
+    aspartateAminotransferase = int(response['aspartateAminotransferase'])
+    albumin = float(response['albumin'])
+    albuminGlobulinRatio = float(response['albuminGlobulinRatio'])
+
     lst = []
+    lst.append(age)
+    lst.append(gender)
+    lst.append(totalBilirubin)
+    lst.append(alkalinePhosphatase)
+    lst.append(alamineAminotransferase)
+    lst.append(aspartateAminotransferase)
+    lst.append(totalProteins)
+    lst.append(albumin)
+    lst.append(albuminGlobulinRatio)
+
     liverDisease = liver.predict([lst])
     probability = liver.probability([lst])
     score = liver.score()

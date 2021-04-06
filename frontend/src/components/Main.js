@@ -9,6 +9,7 @@ import {
 import HeartDisease from "./HeartDisease";
 import { BACKGROUND_COLOR } from "../constants";
 import StrokeDisease from "./StrokeDisease";
+import LiverDisease from "./LiverDisease";
 
 class Main extends React.Component {
   render() {
@@ -32,7 +33,7 @@ class Main extends React.Component {
             />
             <Route
               path="/liver-disease-prediction"
-              component={() => <div>Liver</div>}
+              component={() => <LiverDisease />}
             />
             <Route render={() => <Redirect to="/heart-disease-prediction" />} />
           </Switch>
