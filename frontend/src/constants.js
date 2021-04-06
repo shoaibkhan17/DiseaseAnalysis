@@ -6,4 +6,9 @@ export const DEFAULT_COLOR =
 export const BACKGROUND_COLOR =
   "radial-gradient(circle, rgb(212, 156, 156) 0%, rgb(110, 106, 106) 100%)";
 
-export const PREDICTION_API_URL = "http://localhost:5000/predictDisease";
+var endpoint =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:5000/"
+    : "https://diseaseanalysis.herokuapp.com/";
+
+export const PREDICTION_API_URL = endpoint + "/predictDisease";
